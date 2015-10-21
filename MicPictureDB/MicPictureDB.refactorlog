@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="962a7fa5-c7a3-492e-9d1d-f601aac58db9" ChangeDateTime="10/20/2015 16:16:39">
+    <Property Name="ElementName" Value="[dbo].[UserGroupItem].[USerGroupItemID]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UserGroupItem]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserGroupItemID" />
+  </Operation>
+</Operations>
