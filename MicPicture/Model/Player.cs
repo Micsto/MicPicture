@@ -1,9 +1,27 @@
-﻿
+﻿using MicPicture.Common;
 namespace MicPicture.Model
 {
-	public class Player
+	public class Player : MyExtansions
 	{
-		public int PlayerID { get; set; }
-		public string PlayerAlias { get; set; }
+		private int _playerID;
+		private string _playerAlias;
+		public int PlayerID
+		{
+			get { return _playerID; }
+			set
+			{
+				_playerID = value;
+				OnPropertyChanged("PlayerID");
+			}
+		}
+		public string PlayerAlias
+		{
+			get { return _playerAlias; }
+			set
+			{
+				_playerAlias = value;
+				OnPropertyChanged("PlayerAlias");
+			}
+		}
 	}
 }

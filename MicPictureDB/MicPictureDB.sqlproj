@@ -76,6 +76,7 @@
     <Build Include="dbo\Stored Procedures\uspViewAllScores.sql" />
     <Build Include="dbo\Stored Procedures\uspScoreInsert.sql" />
     <Build Include="dbo\Stored Procedures\uspPlayerGroupItemInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspViewAllPictures.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Schema Comparison\LocalDBToSchema.scmp" />

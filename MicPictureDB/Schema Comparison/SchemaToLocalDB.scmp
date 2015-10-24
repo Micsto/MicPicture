@@ -2,15 +2,15 @@
 <SchemaComparison>
   <Version>10</Version>
   <SourceModelProvider>
-    <ConnectionBasedModelProvider>
-      <ConnectionString>Data Source=(local)\SQLEXPRESS;Initial Catalog=MicPictureDB;Integrated Security=True;Pooling=False</ConnectionString>
-    </ConnectionBasedModelProvider>
-  </SourceModelProvider>
-  <TargetModelProvider>
     <ProjectBasedModelProvider>
       <ProjectGuid>{696771ae-e69b-4900-bb58-b5c37e838687}</ProjectGuid>
       <Name>MicPictureDB</Name>
     </ProjectBasedModelProvider>
+  </SourceModelProvider>
+  <TargetModelProvider>
+    <ConnectionBasedModelProvider>
+      <ConnectionString>Data Source=(local)\SQLEXPRESS;Initial Catalog=MicPictureDB;Integrated Security=True;Pooling=False</ConnectionString>
+    </ConnectionBasedModelProvider>
   </TargetModelProvider>
   <SchemaCompareSettingsService>
     <SchemaCompareSettingsService>

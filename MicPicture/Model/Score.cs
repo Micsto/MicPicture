@@ -1,10 +1,29 @@
-﻿
+﻿using MicPicture.Common;
 
 namespace MicPicture.Model
 {
-	public class Score
+	public class Score : MyExtansions
 	{
-		public int ScoreID { get; set; }
-		public int UserScore { get; set; }
+		private int _scoreID;
+		private int _userScore;
+
+		public int ScoreID
+		{
+			get { return _scoreID; }
+			set
+			{
+				_scoreID = value;
+				OnPropertyChanged("ScoreID");
+			}
+		}
+		public int UserScore
+		{
+			get { return _userScore; }
+			set
+			{
+				_userScore = value;
+				OnPropertyChanged("UserScore");
+			}
+		}
 	}
 }
