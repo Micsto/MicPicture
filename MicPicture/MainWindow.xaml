@@ -4,8 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MicPicture"
+		xmlns:converters="clr-namespace:MicPicture.Common.Converters"
         mc:Ignorable="d"
-        Title="MicPicture" Height="350" Width="600">
+		xmlns:viewModel="clr-namespace:MicPicture.ViewModel"
+        Title="MicPicture" Height="350" Width="600"
+		d:DataContext="{d:DesignInstance viewModel:MainWindowViewModel}"
+		Icon="Common/Assets/Logo_github.png">
+    <Window.Resources>
+        <converters:BooleanToInVisibilityConverter x:Key="booltoinvisconv" />
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -18,20 +25,29 @@
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Horizontal"  Grid.Column="0" Grid.Row="0" Margin="50,5,0,0">
             <TextBlock Text="Welcome :"/>
-            <TextBlock Text="{Binding NewPlayer.PlayerAlias}"/>
+            <TextBlock Text="{Binding NewPlayer.PlayerAlias}" Margin="10,0,0,0"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Orientation="Horizontal">
+            <TextBlock Text="Timer:" Margin="10,5,0,0"></TextBlock>
+            <TextBlock  Text="{Binding GameTimer}" Margin="10,5,0,0"></TextBlock>
+            <TextBlock Text="Score:" Margin="35,5,0,0"></TextBlock>
+            <TextBlock Text="{Binding GameScore}" Margin="10,5,0,0"></TextBlock>
         </StackPanel>
 
-        <TextBlock Grid.Column="1" Text="{Binding GameTimer}"></TextBlock>
-	
-        <ListView Grid.Column="0" Grid.Row="1">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-					<!-- Uc for picture to drag here -->
-				</DataTemplate>
-			</ListView.ItemTemplate>
-        </ListView>
 
-        <ListView Grid.Column="1" Grid.Row="1">
+        <Border BorderBrush="Blue" CornerRadius="10"
+                BorderThickness="3" HorizontalAlignment="Center" VerticalAlignment="Stretch"
+                Background="#EAEAEA" Margin="167,29,163,63" Grid.Row="1" Width="262" Grid.ColumnSpan="2">
+            <ListView Grid.Column="0" Grid.Row="1" ItemsSource="{Binding PicturesToDrag}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <!-- Uc for picture to drag here -->
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Border>
+
+        <ListView Grid.Column="1" Grid.Row="1" ItemsSource="{Binding ListOfDraggedPictures}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <!-- the place for where the pictures get dragged to  -->
@@ -41,6 +57,20 @@
 
         <Button Grid.Column="1" Grid.Row="2" Width="80" Content="Play!"
 				HorizontalAlignment="Right" Command="{Binding StartGameCommand}"/>
-		
+
+        <Border BorderBrush="Blue" CornerRadius="10" Visibility="{Binding AreYouLoggedIn, 
+				FallbackValue=Visible, 
+				Converter={StaticResource booltoinvisconv}}"
+                BorderThickness="3" HorizontalAlignment="Center" VerticalAlignment="Stretch"
+                Background="#EAEAEA" Margin="167,29,163,63" Grid.Row="1" Width="262" Grid.ColumnSpan="2">
+            <Grid Grid.Column="1" Grid.RowSpan="1" Margin="7,27,15,-156" Width="234">
+                <StackPanel Height="110" VerticalAlignment="Top">
+                    <TextBlock Text="Player Alias:"  Margin="80,10,0,0"/>
+                    <TextBox Text="{Binding NewPlayer.PlayerAlias}"/>
+                    <Button Content="Log In!" Command="{Binding LogInCommand}" Margin="0,20,0,0" Height="24"/>
+                </StackPanel>
+            </Grid>
+
+        </Border>
     </Grid>
 </Window>

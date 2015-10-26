@@ -82,6 +82,7 @@
     <None Include="Schema Comparison\LocalDBToSchema.scmp" />
     <None Include="Schema Comparison\SchemaToLocalDB.scmp" />
     <None Include="Scripts\Post Scripts\DiagFull_Script.sql" />
+    <None Include="Scripts\Post Scripts\PictureDataScript.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="MicPictureDB.refactorlog" />

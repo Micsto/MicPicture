@@ -26,7 +26,7 @@ CREATE PROCEDURE [dbo].[uspViewAllPictures]
 AS
 BEGIN
 	SET NOCOUNT ON;
-	SELECT        dbo.Picture.Pictures
-	FROM          dbo.Picture
+	SELECT        PictureID, Pictures
+	FROM           dbo.Picture	
 	Where		dbo.Picture.PictureParent = @PictureParent
 END

@@ -30,20 +30,29 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 	DECLARE
-		@PlayerID int
+		@PlayerID int 
+		,@Existed bit = 0;
+		IF EXISTS(SELECT PlayerAlias FROM Player WHERE PlayerAlias = @PlayerAlias)
+	BEGIN
+		SET @Existed = 1;
+		GOTO Result;
+	END
 	BEGIN 
+	
 		INSERT INTO dbo.Player
 				(PlayerAlias)
+			
 			VALUES
 				(@PlayerAlias);
-
-		SET @PlayerID = SCOPE_IDENTITY();
+	   SET @PlayerID = SCOPE_IDENTITY();
+	
 	END 
 RESULT:
 	SET NOCOUNT OFF;
 
 	SELECT PlayerID
 		,PlayerAlias
+		,@Existed AS Existed
 	FROM dbo.Player
 	WHERE PlayerID = @PlayerID
 		OR PlayerAlias = @PlayerAlias;
