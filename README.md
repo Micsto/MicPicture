@@ -1,6 +1,7 @@
 # MicPicture
 A simple drag and drop - game. 
 
+Noticed a bug, you before you do all of this, you have to change in the propertys of the DB-projekt and change the connectionstring from (localdb)\ProjectV12 or whataver its called to your own (local)\SQLEXPRESS
 To get the dabase, start your Sql Server Management Studio, Create a dabatase named MicPictureDB.
 Run the LocalDBToSchema in the Schema Comparison folder, then you get the db. 
 Optional:
