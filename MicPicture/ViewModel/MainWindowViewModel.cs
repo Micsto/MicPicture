@@ -5,6 +5,9 @@ using MicPicture.Repositories.Interfaces;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using System;
+using System.Collections.Generic;
+using System.Windows.Input;
+using System.Linq;
 
 namespace MicPicture.ViewModel
 {
@@ -17,8 +20,7 @@ namespace MicPicture.ViewModel
 		private IPlayerGroupItemRepository PlayerGroupItemRepository;
 		#endregion
 
-		#region Private properties
-
+		#region Private fields
 		private Player _newplayer;
 		private DelegateCommand _startGameCommand;
 		private DelegateCommand _logInCommand;
@@ -37,7 +39,11 @@ namespace MicPicture.ViewModel
 			set
 			{
 				_gameTime = value;
+#if CS5
 				OnPropertyChanged("GameTimer");
+#else
+				OnPropertyChanged(nameof(GameTimer));
+#endif
 			}
 
 		}
@@ -47,7 +53,11 @@ namespace MicPicture.ViewModel
 			set
 			{
 				_gameScore = value;
+#if CS5
 				OnPropertyChanged("GameScore");
+#else
+				OnPropertyChanged(nameof(GameScore));
+#endif
 			}
 		}
 		public bool AreYouLoggedIn
@@ -56,7 +66,11 @@ namespace MicPicture.ViewModel
 			set
 			{
 				_areYouLoggedIn = value;
+#if CS5
 				OnPropertyChanged("AreYouLoggedIn");
+#else
+				OnPropertyChanged(nameof(AreYouLoggedIn));
+#endif
 			}
 		}
 
@@ -66,7 +80,11 @@ namespace MicPicture.ViewModel
 			set
 			{
 				_gameOver = value;
-				OnPropertyChanged("GameOver");
+#if CS5
+				OnPropertyChanged("Gameover");
+#else
+				OnPropertyChanged(nameof(Gameover));
+#endif
 			}
 		}
 
@@ -76,7 +94,11 @@ namespace MicPicture.ViewModel
 			set
 			{
 				_picturesToDrag = value;
-				OnPropertyChanged("PictureToDrag");
+#if CS5
+				OnPropertyChanged("PicturesToDrag");
+#else
+				OnPropertyChanged(nameof(PicturesToDrag));
+#endif
 			}
 		}
 
@@ -86,7 +108,11 @@ namespace MicPicture.ViewModel
 			set
 			{
 				_listOfDraggedPictures = value;
+#if CS5
 				OnPropertyChanged("ListOfDraggedPictures");
+#else
+				OnPropertyChanged(nameof(ListOfDraggedPictures));
+#endif
 			}
 		}
 
@@ -96,7 +122,11 @@ namespace MicPicture.ViewModel
 			set
 			{
 				_newplayer = value;
+#if CS5
 				OnPropertyChanged("NewPlayer");
+#else
+				OnPropertyChanged(nameof(NewPlayer));
+#endif
 			}
 		}
 
@@ -118,7 +148,6 @@ namespace MicPicture.ViewModel
 
 		DispatcherTimer _timer = new DispatcherTimer();
 		public int Currentsec = 60;
-
 		private void timer_Tick(object sender, object e)
 		{
 			Currentsec = Currentsec - 1;
@@ -135,12 +164,18 @@ namespace MicPicture.ViewModel
 				{
 					Execute = () =>
 					{
-						//var temp = PictureRepository.DbGetallPictures(1);
-						//foreach (var item in temp)
-						//{
-						//	PicturesToDrag.Add(item);
+						Random random = new Random();
+						int randomNumber = random.Next(1, 3);
 
-						//}
+
+						List<Picture> tempPictureList = PictureRepository.DbGetallPictures(randomNumber);
+						foreach (Picture item in tempPictureList)
+						{
+							PicturesToDrag.Add(item);
+						}
+						var mainPicture = PicturesToDrag.First();
+						ListOfDraggedPictures.Add(mainPicture);
+						PicturesToDrag.Remove(mainPicture);
 						_timer.Start();
 					}
 
@@ -159,10 +194,8 @@ namespace MicPicture.ViewModel
 						PlayerRepository.DbPlayerInsert(NewPlayer.PlayerAlias);
 						AreYouLoggedIn = true;
 					}
-
 				});
 			}
-
 		}
 
 		#endregion

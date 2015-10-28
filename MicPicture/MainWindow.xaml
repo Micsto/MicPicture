@@ -7,7 +7,8 @@
 		xmlns:converters="clr-namespace:MicPicture.Common.Converters"
         mc:Ignorable="d"
 		xmlns:viewModel="clr-namespace:MicPicture.ViewModel"
-        Title="MicPicture" Height="350" Width="600"
+        Title="MicPicture" Height="450" Width="800"
+		MinHeight="450" MinWidth="800" MaxHeight="450" MaxWidth="800"
 		d:DataContext="{d:DesignInstance viewModel:MainWindowViewModel}"
 		Icon="Common/Assets/Logo_github.png">
     <Window.Resources>
@@ -34,19 +35,34 @@
             <TextBlock Text="{Binding GameScore}" Margin="10,5,0,0"></TextBlock>
         </StackPanel>
 
+        <ListBox Grid.Column="0" Grid.Row="1" x:Name="PicturesToDragListBox"
+				 ItemsSource="{Binding PicturesToDrag}"
+				 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+				 BorderThickness="2" SelectionMode="Multiple">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"  IsItemsHost="True" Width="400"
+							   ItemHeight="100"
+							   ItemWidth="100"
+                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+							   ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <Image  Source="{Binding Pictures}"
+                   Width="100" Height="100"
+                   HorizontalAlignment="Left" VerticalAlignment="Top"
+                   Stretch="Fill"
+                   Margin="0,0,0,10"
+                   RenderOptions.BitmapScalingMode="Fant"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
-        <Border BorderBrush="Blue" CornerRadius="10"
-                BorderThickness="3" HorizontalAlignment="Center" VerticalAlignment="Stretch"
-                Background="#EAEAEA" Margin="167,29,163,63" Grid.Row="1" Width="262" Grid.ColumnSpan="2">
-            <ListView Grid.Column="0" Grid.Row="1" ItemsSource="{Binding PicturesToDrag}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <!-- Uc for picture to drag here -->
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Border>
-
+			<!-- Make it to a Listbox-->
         <ListView Grid.Column="1" Grid.Row="1" ItemsSource="{Binding ListOfDraggedPictures}">
             <ListView.ItemTemplate>
                 <DataTemplate>
