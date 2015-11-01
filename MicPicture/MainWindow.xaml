@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MicPicture"
+		xmlns:dd="clr-namespace:MicPicture.Common.DragDrop"
 		xmlns:converters="clr-namespace:MicPicture.Common.Converters"
         mc:Ignorable="d"
 		xmlns:viewModel="clr-namespace:MicPicture.ViewModel"
@@ -13,7 +14,9 @@
 		Icon="Common/Assets/Logo_github.png">
     <Window.Resources>
         <converters:BooleanToInVisibilityConverter x:Key="booltoinvisconv" />
+		
     </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -36,18 +39,20 @@
         </StackPanel>
 
         <ListBox Grid.Column="0" Grid.Row="1" x:Name="PicturesToDragListBox"
+				 dd:DragDrop.IsDragSource="True" 
+				 dd:DragDrop.IsDropTarget="True"
 				 ItemsSource="{Binding PicturesToDrag}"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-				 BorderThickness="2" SelectionMode="Multiple">
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal"  IsItemsHost="True" Width="400"
+				 BorderThickness="2" SelectionMode="Single">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal"  IsItemsHost="True" Width="400"
 							   ItemHeight="100"
 							   ItemWidth="100"
                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 							   ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
@@ -62,17 +67,47 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-			<!-- Make it to a Listbox-->
-        <ListView Grid.Column="1" Grid.Row="1" ItemsSource="{Binding ListOfDraggedPictures}">
-            <ListView.ItemTemplate>
+        <!-- Make it to a Listbox-->
+        <ListBox Grid.Column="1" Grid.Row="1" 
+				 IsSynchronizedWithCurrentItem="True"
+                 dd:DragDrop.IsDropTarget="True" 
+				 dd:DragDrop.DropHandler="{Binding }"
+				 ItemsSource="{Binding ListOfDraggedPictures, Mode=TwoWay}">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal"  IsItemsHost="True" Width="400"
+							   ItemHeight="100"
+							   ItemWidth="100"
+                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+							   ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <!-- the place for where the pictures get dragged to  -->
+                    <StackPanel Orientation="Vertical">
+                        <Image  Source="{Binding Pictures}"
+                   Width="100" Height="100"
+                   HorizontalAlignment="Left" VerticalAlignment="Top"
+                   Stretch="Fill"
+                   Margin="0,0,0,10"
+                   RenderOptions.BitmapScalingMode="Fant"/>
+                    </StackPanel>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
         <Button Grid.Column="1" Grid.Row="2" Width="80" Content="Play!"
-				HorizontalAlignment="Right" Command="{Binding StartGameCommand}"/>
+				Background="LightBlue"
+				HorizontalAlignment="Center"
+				Command="{Binding StartGameCommand}" 
+				IsEnabled="{Binding IsPlayButtonEnabled}">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+
+        </Button>
 
         <Border BorderBrush="Blue" CornerRadius="10" Visibility="{Binding AreYouLoggedIn, 
 				FallbackValue=Visible, 
@@ -83,7 +118,16 @@
                 <StackPanel Height="110" VerticalAlignment="Top">
                     <TextBlock Text="Player Alias:"  Margin="80,10,0,0"/>
                     <TextBox Text="{Binding NewPlayer.PlayerAlias}"/>
-                    <Button Content="Log In!" Command="{Binding LogInCommand}" Margin="0,20,0,0" Height="24"/>
+                    <Button Content="Log In!" Command="{Binding LogInCommand}" 
+							
+							Margin="97,20,75,0" Height="32" Background="LightBlue" 
+							Width="62">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
                 </StackPanel>
             </Grid>
 

@@ -73,6 +73,16 @@
     <Compile Include="Common\Converters\BooleanToInVisibilityConverter.cs" />
     <Compile Include="Common\Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Common\DelegateCommand.cs" />
+    <Compile Include="Common\DragDrop\DefaultDragHandler.cs" />
+    <Compile Include="Common\DragDrop\DefaultDropHandler.cs" />
+    <Compile Include="Common\DragDrop\DragDrop.cs" />
+    <Compile Include="Common\DragDrop\DragInfo.cs" />
+    <Compile Include="Common\DragDrop\DropInfo.cs" />
+    <Compile Include="Common\DragDrop\Interfaces\IDragSource.cs" />
+    <Compile Include="Common\DragDrop\Interfaces\IDropTarget.cs" />
+    <Compile Include="Common\DragDrop\Utilities\ItemControlExtansion.cs" />
+    <Compile Include="Common\DragDrop\Utilities\TypeUtilities.cs" />
+    <Compile Include="Common\DragDrop\Utilities\VisualTreeExtensions.cs" />
     <Compile Include="Repositories\GenericRepositoryDB.cs" />
     <Compile Include="Repositories\Interfaces\IGenericRepository.cs" />
     <Compile Include="Repositories\Interfaces\IPictureRepository.cs" />

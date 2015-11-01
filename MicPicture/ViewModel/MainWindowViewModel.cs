@@ -6,12 +6,14 @@ using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using System;
 using System.Collections.Generic;
-using System.Windows.Input;
 using System.Linq;
+using MicPicture.Common.DragDrop.Interfaces;
+using MicPicture.Common.DragDrop;
+using System.Windows;
 
 namespace MicPicture.ViewModel
 {
-	public class MainWindowViewModel : MyExtansions
+	public class MainWindowViewModel : MyExtansions, IDropTarget
 	{
 		#region Repositories
 		private IPlayerRepository PlayerRepository;
@@ -22,13 +24,15 @@ namespace MicPicture.ViewModel
 
 		#region Private fields
 		private Player _newplayer;
+		private Picture _mainPicture;
 		private DelegateCommand _startGameCommand;
 		private DelegateCommand _logInCommand;
 		private ObservableCollection<Picture> _picturesToDrag;
 		private ObservableCollection<Picture> _listOfDraggedPictures;
 		private bool _areYouLoggedIn = false;
+		private bool _isPlayButtonEnabled = true;
 		private string _gameTime;
-		private string _gameScore;
+		private int _gameScore;
 		private bool _gameOver;
 
 		#endregion
@@ -47,7 +51,7 @@ namespace MicPicture.ViewModel
 			}
 
 		}
-		public string GameScore
+		public int GameScore
 		{
 			get { return _gameScore; }
 			set
@@ -70,6 +74,19 @@ namespace MicPicture.ViewModel
 				OnPropertyChanged("AreYouLoggedIn");
 #else
 				OnPropertyChanged(nameof(AreYouLoggedIn));
+#endif
+			}
+		}
+		public bool IsPlayButtonEnabled
+		{
+			get { return _isPlayButtonEnabled; }
+			set
+			{
+				_isPlayButtonEnabled = value;
+#if CS5
+				OnPropertyChanged("IsPlayButtonEnabled");
+#else
+				OnPropertyChanged(nameof(IsPlayButtonEnabled));
 #endif
 			}
 		}
@@ -131,6 +148,21 @@ namespace MicPicture.ViewModel
 		}
 
 
+		public Picture MainPicture
+		{
+			get { return _mainPicture; }
+			set
+			{
+				_mainPicture = value;
+#if CS5
+				OnPropertyChanged("MainPicture");
+#else
+				OnPropertyChanged(nameof(MainPicture));
+#endif
+			}
+		}
+
+
 
 		public MainWindowViewModel()
 		{
@@ -173,10 +205,11 @@ namespace MicPicture.ViewModel
 						{
 							PicturesToDrag.Add(item);
 						}
-						var mainPicture = PicturesToDrag.First();
-						ListOfDraggedPictures.Add(mainPicture);
-						PicturesToDrag.Remove(mainPicture);
+						MainPicture = PicturesToDrag.First();
+						PicturesToDrag.Remove(PicturesToDrag.First());
+						Shuffle(PicturesToDrag);
 						_timer.Start();
+						IsPlayButtonEnabled = false;
 					}
 
 				});
@@ -199,5 +232,22 @@ namespace MicPicture.ViewModel
 		}
 
 		#endregion
+
+		void IDropTarget.DragOver(DropInfo dropInfo)
+		{
+			if (dropInfo.Data is Picture)
+			{
+				dropInfo.Effects = DragDropEffects.Move;
+			}
+		}
+
+		void IDropTarget.Drop(DropInfo dropInfo)
+		{
+			Picture picture = (Picture)dropInfo.Data;
+			ListOfDraggedPictures.Add(picture);
+			GameScore += 10;
+			PicturesToDrag.Remove(picture);
+		}
+
 	}
 }

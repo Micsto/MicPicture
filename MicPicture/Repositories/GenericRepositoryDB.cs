@@ -43,7 +43,7 @@ namespace MicPicture.Repositories
 				}
 			}
 		}
-		
+
 
 		public T GetObject(string usp, Dictionary<string, Tuple<SqlDbType, object>> parameters)
 		{
@@ -71,14 +71,11 @@ namespace MicPicture.Repositories
 						}
 						return obj;
 					}
-					throw new Exception
-						("No resultset was gathered! "
-						+ Environment.NewLine +
-						"GetObjectFromDBGeneric guarantees an object must be generated.");
+					throw new Exception();
 				}
 			}
 		}
 
-		
+
 	}
 }

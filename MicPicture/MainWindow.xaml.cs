@@ -1,5 +1,11 @@
-﻿using MicPicture.ViewModel;
+﻿using MicPicture.Model;
+using MicPicture.ViewModel;
+using System;
+using MicPicture.Common;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace MicPicture
 {
@@ -8,10 +14,13 @@ namespace MicPicture
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+
 		public MainWindow()
 		{
 			InitializeComponent();
 			DataContext = new MainWindowViewModel();
 		}
+
+
 	}
 }
